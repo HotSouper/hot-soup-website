@@ -6,9 +6,11 @@ export default function Home() {
       {/* Interactive soup background */}
       <SoupBackground />
 
-      {/* Main content */}
+      {/* Hero with blobs in front */}
+      <Hero />
+
+      {/* Main content above blobs */}
       <main className="relative z-10 flex-1">
-        <Hero />
         <Services />
         <About />
         <Contact />

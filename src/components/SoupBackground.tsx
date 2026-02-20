@@ -31,10 +31,13 @@ const createBlob = (index: number = 0, isInitial: boolean = false): Blob => {
   const depth = Math.random();
   const baseSize = 25 + depth * 50; // 25-75px based on depth
 
+  // Y position in document coordinates - spawn above current viewport
+  const spawnY = (typeof window !== 'undefined' ? window.scrollY : 0) - 60 - Math.random() * 40;
+
   return {
     id: Date.now() + Math.random(),
     x,
-    y: -60 - Math.random() * 40,
+    y: spawnY,
     size: baseSize + Math.random() * 20,
     wobbleSpeed: 2 + Math.random() * 2,
     driftSpeed: 0.5 + (1 - depth) * 0.8 + Math.random() * 0.3, // Far blobs fall faster
@@ -65,7 +68,6 @@ export function SoupBackground() {
   }, []);
 
   const handleBlobClick = useCallback((blobId: number, x: number, y: number) => {
-    console.log('Blob clicked!', { blobId, x, y });
     // Spawn 2-3 child blobs with slight offset
     const numChildren = 2 + Math.floor(Math.random() * 2);
     const children = Array.from({ length: numChildren }, (_, i) => {
@@ -101,7 +103,7 @@ export function SoupBackground() {
     <>
       <div className="fixed inset-0 z-0" onClick={handleClick} />
 
-      <div className="fixed inset-0 pointer-events-none z-[15] overflow-hidden">
+      <div className="absolute inset-x-0 top-0 pointer-events-none z-[5] overflow-visible" style={{ height: '100vh', minHeight: '100%' }}>
         {blobs.map((blob) => (
           <FloatingBlob
             key={blob.id}
@@ -146,11 +148,11 @@ function FloatingBlob({
       const animate = () => {
         if (hasSplashed.current) return;
 
-        // Get footer position in VIEWPORT coordinates (blobs use fixed positioning)
+        // Get footer position in DOCUMENT coordinates
         const footer = document.querySelector("footer");
-        const footerViewportTop = footer
-          ? footer.getBoundingClientRect().top
-          : window.innerHeight;
+        const footerDocTop = footer
+          ? footer.getBoundingClientRect().top + window.scrollY
+          : document.body.scrollHeight;
 
         // Gravity
         velocity.current.y += 0.06 * blob.driftSpeed;
@@ -167,13 +169,15 @@ function FloatingBlob({
           pos.current.x = Math.max(5, Math.min(95, pos.current.x));
         }
 
-        // Check collision using VIEWPORT coordinates (consistent with fixed positioning)
+        // Check collision using DOCUMENT coordinates
         const blobBottom = pos.current.y + blob.size;
 
-        if (blobBottom >= footerViewportTop + 35) {
+        if (blobBottom >= footerDocTop + 35) {
           hasSplashed.current = true;
           setIsVisible(false);
-          onSplash(blob.id, pos.current.x, footerViewportTop + 50);
+          // Pass viewport Y for splash positioning (splash uses fixed positioning)
+          const splashViewportY = footerDocTop - window.scrollY + 50;
+          onSplash(blob.id, pos.current.x, splashViewportY);
           return;
         }
 
@@ -192,7 +196,6 @@ function FloatingBlob({
   if (!isVisible) return null;
 
   const handleClick = (e: React.MouseEvent) => {
-    console.log('Blob element clicked!', { id: blob.id, pos: pos.current });
     e.stopPropagation();
     onBlobClick(blob.id, pos.current.x, pos.current.y);
   };
@@ -224,6 +227,7 @@ function FloatingBlob({
         </defs>
         <motion.path
           fill={`url(#grad-${blob.id})`}
+          initial={{ d: "M50,10 C70,10 90,30 90,50 C90,70 70,90 50,90 C30,90 10,70 10,50 C10,30 30,10 50,10" }}
           animate={{
             d: [
               "M50,10 C70,10 90,30 90,50 C90,70 70,90 50,90 C30,90 10,70 10,50 C10,30 30,10 50,10",
@@ -244,6 +248,7 @@ function FloatingBlob({
           cy="35"
           fill="white"
           opacity="0.4"
+          initial={{ rx: 12, ry: 8 }}
           animate={{
             rx: [12, 10, 14, 12],
             ry: [8, 12, 6, 8],

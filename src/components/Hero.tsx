@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function Hero() {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
+    <section className="relative z-[1] min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
 
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <motion.div
