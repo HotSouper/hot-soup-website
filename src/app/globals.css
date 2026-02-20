@@ -6,6 +6,8 @@
   --accent: #e85d04;
   --accent-light: #f4a261;
   --accent-dark: #d62828;
+  --secondary: #2dd4bf;
+  --secondary-dark: #14b8a6;
   --muted: #6b7280;
   --surface: #ffffff;
   --surface-elevated: #ffffff;
@@ -18,6 +20,8 @@
   --color-accent: var(--accent);
   --color-accent-light: var(--accent-light);
   --color-accent-dark: var(--accent-dark);
+  --color-secondary: var(--secondary);
+  --color-secondary-dark: var(--secondary-dark);
   --color-muted: var(--muted);
   --color-surface: var(--surface);
   --color-border: var(--border);

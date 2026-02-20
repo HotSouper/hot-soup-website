@@ -1,16 +1,33 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export function Hero() {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
-      
+
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="mb-8"
+        >
+          <Image
+            src="/logo.png"
+            alt="Hot Soup"
+            width={300}
+            height={60}
+            className="mx-auto brightness-0 invert"
+            priority
+          />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
         >
           <span className="inline-block px-4 py-2 mb-6 text-sm font-medium text-accent bg-accent/10 rounded-full">
             AI-Powered Product Development
@@ -21,7 +38,7 @@ export function Hero() {
           className="text-5xl md:text-7xl font-bold tracking-tight mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
           Ideas into reality,{" "}
           <span className="text-accent">faster</span>
@@ -31,7 +48,7 @@ export function Hero() {
           className="text-xl md:text-2xl text-muted max-w-2xl mx-auto mb-10 leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
           15 years of software development expertise meets cutting-edge AI.
           We help product teams embrace the future and ship what matters.
@@ -41,7 +58,7 @@ export function Hero() {
           className="flex flex-col sm:flex-row gap-4 justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
         >
           <a
             href="#contact"

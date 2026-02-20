@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -65,9 +66,14 @@ export function Footer() {
         <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             {/* Logo / Brand */}
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold">Hot Soup</span>
-              <span className="text-white/60 text-sm">🍜</span>
+            <div className="flex items-center">
+              <Image
+                src="/logo.png"
+                alt="Hot Soup"
+                width={120}
+                height={24}
+                className="brightness-0 invert"
+              />
             </div>
 
             {/* Links */}
