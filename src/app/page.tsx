@@ -1,9 +1,13 @@
-import { Hero, Services, About, Contact, Footer } from "@/components";
+import { Hero, Services, About, Contact, Footer, SoupBackground } from "@/components";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <main className="flex-1">
+    <div className="relative flex min-h-screen flex-col">
+      {/* Interactive soup background */}
+      <SoupBackground />
+
+      {/* Main content */}
+      <main className="relative z-10 flex-1">
         <Hero />
         <Services />
         <About />

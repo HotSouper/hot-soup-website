@@ -5,9 +5,7 @@ import { motion } from "framer-motion";
 export function Hero() {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center px-6 overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-transparent" />
-
+      
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

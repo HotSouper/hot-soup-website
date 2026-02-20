@@ -1,32 +1,68 @@
 "use client";
 
-import { SoupDrop } from "./SoupDrop";
+import { motion } from "framer-motion";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="relative mt-auto">
-      {/* Soup drop animation area */}
-      <SoupDrop />
+      {/* Wavy surface */}
+      <div className="relative h-12 overflow-visible">
+        <svg
+          className="absolute bottom-0 w-full h-12"
+          viewBox="0 0 1200 50"
+          preserveAspectRatio="none"
+        >
+          <motion.path
+            d="M0,30 C150,55 350,5 600,30 C850,55 1050,5 1200,30 L1200,50 L0,50 Z"
+            fill="var(--accent)"
+            animate={{
+              d: [
+                "M0,30 C150,55 350,5 600,30 C850,55 1050,5 1200,30 L1200,50 L0,50 Z",
+                "M0,30 C150,5 350,55 600,30 C850,5 1050,55 1200,30 L1200,50 L0,50 Z",
+                "M0,30 C150,55 350,5 600,30 C850,55 1050,5 1200,30 L1200,50 L0,50 Z",
+              ],
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </svg>
+      </div>
 
-      {/* Footer content with wavy top edge */}
-      <div className="relative bg-accent text-white">
-        {/* Wavy top edge SVG */}
-        <div className="absolute -top-8 left-0 w-full overflow-hidden">
-          <svg
-            className="relative block w-full h-8"
-            viewBox="0 0 1200 40"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0,40 C300,40 300,10 600,10 C900,10 900,40 1200,40 L1200,40 L0,40 Z"
-              fill="var(--accent)"
-            />
-          </svg>
-        </div>
-
-        <div className="max-w-6xl mx-auto px-6 py-12 pt-8">
+      {/* Footer content */}
+      <div className="relative bg-accent text-white -mt-4 overflow-visible">
+        {/* Rising bubbles */}
+        {[...Array(4)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full border-2"
+            style={{
+              width: 14 + (i % 3) * 6,
+              height: 14 + (i % 3) * 6,
+              left: `${15 + (i * 22)}%`,
+              bottom: 20,
+            }}
+            animate={{
+              y: [0, -180, -200],
+              opacity: [0, 0.6, 0.9, 0],
+              scale: [0.6, 1, 0.9, 1.6],
+              backgroundColor: ["rgba(0,0,0,0.2)", "rgba(0,0,0,0.2)", "rgba(255,200,100,0.8)", "rgba(255,200,100,0)"],
+              borderColor: ["rgba(0,0,0,0.5)", "rgba(0,0,0,0.5)", "rgba(255,220,150,1)", "rgba(255,220,150,0)"],
+            }}
+            transition={{
+              duration: 4 + (i % 3),
+              repeat: Infinity,
+              delay: i * 0.9,
+              ease: "easeOut",
+              times: [0, 0.8, 0.92, 1],
+            }}
+          />
+        ))}
+        <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             {/* Logo / Brand */}
             <div className="flex items-center gap-2">
