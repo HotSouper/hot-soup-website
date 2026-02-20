@@ -64,6 +64,22 @@ export function SoupBackground() {
     ]);
   }, []);
 
+  const handleBlobClick = useCallback((blobId: number, x: number, y: number) => {
+    console.log('Blob clicked!', { blobId, x, y });
+    // Spawn 2-3 child blobs with slight offset
+    const numChildren = 2 + Math.floor(Math.random() * 2);
+    const children = Array.from({ length: numChildren }, (_, i) => {
+      const offset = (i - (numChildren - 1) / 2) * 12;
+      return {
+        ...createBlob(),
+        x: x + offset,
+        y,
+        delay: 0,
+      };
+    });
+    setBlobs((prev) => [...prev, ...children]);
+  }, []);
+
   const handleBlobSplash = useCallback((blobId: number, xPercent: number, viewportY: number) => {
     setBlobs((prev) => prev.filter((b) => b.id !== blobId));
 
@@ -85,9 +101,14 @@ export function SoupBackground() {
     <>
       <div className="fixed inset-0 z-0" onClick={handleClick} />
 
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none z-[15] overflow-hidden">
         {blobs.map((blob) => (
-          <FloatingBlob key={blob.id} blob={blob} onSplash={handleBlobSplash} />
+          <FloatingBlob
+            key={blob.id}
+            blob={blob}
+            onSplash={handleBlobSplash}
+            onBlobClick={handleBlobClick}
+          />
         ))}
       </div>
 
@@ -103,9 +124,11 @@ export function SoupBackground() {
 function FloatingBlob({
   blob,
   onSplash,
+  onBlobClick,
 }: {
   blob: Blob;
   onSplash: (id: number, x: number, y: number) => void;
+  onBlobClick: (id: number, x: number, y: number) => void;
 }) {
   const [position, setPosition] = useState({ x: blob.x, y: blob.y });
   const [isVisible, setIsVisible] = useState(false); // Start hidden
@@ -168,10 +191,17 @@ function FloatingBlob({
 
   if (!isVisible) return null;
 
+  const handleClick = (e: React.MouseEvent) => {
+    console.log('Blob element clicked!', { id: blob.id, pos: pos.current });
+    e.stopPropagation();
+    onBlobClick(blob.id, pos.current.x, pos.current.y);
+  };
+
   return (
     <div
-      className="absolute pointer-events-none"
+      className="absolute"
       style={{
+        cursor: 'url(/cursor-ladle.svg) 6 4, pointer',
         left: `${position.x}%`,
         top: position.y,
         width: blob.size,
@@ -180,9 +210,11 @@ function FloatingBlob({
         opacity: 0.5 + blob.depth * 0.5, // 0.5-1.0 based on depth
         filter: `blur(${(1 - blob.depth) * 1.5}px)`, // Slight blur for distant blobs
         zIndex: Math.floor(blob.depth * 10),
+        pointerEvents: "auto",
       }}
+      onClick={handleClick}
     >
-      <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-lg">
+      <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-lg pointer-events-none">
         <defs>
           <radialGradient id={`grad-${blob.id}`} cx="30%" cy="30%">
             <stop offset="0%" stopColor={`hsl(${35 + blob.hue}, 95%, 70%)`} stopOpacity="0.9" />
