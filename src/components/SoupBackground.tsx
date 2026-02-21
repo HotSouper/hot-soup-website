@@ -29,7 +29,7 @@ const createBlob = (index: number = 0, isInitial: boolean = false): Blob => {
 
   // Depth affects size, speed, and opacity (0 = far/small/fast, 1 = close/large/slow)
   const depth = Math.random();
-  const baseSize = 25 + depth * 50; // 25-75px based on depth
+  const baseSize = 18 + depth * 38; // 18-56px based on depth
 
   // Y position in document coordinates - spawn above current viewport
   const spawnY = (typeof window !== 'undefined' ? window.scrollY : 0) - 60 - Math.random() * 40;
@@ -38,7 +38,7 @@ const createBlob = (index: number = 0, isInitial: boolean = false): Blob => {
     id: Date.now() + Math.random(),
     x,
     y: spawnY,
-    size: baseSize + Math.random() * 20,
+    size: baseSize + Math.random() * 15,
     wobbleSpeed: 2 + Math.random() * 2,
     driftSpeed: 0.5 + (1 - depth) * 0.8 + Math.random() * 0.3, // Far blobs fall faster
     hue: Math.random() * 30,
@@ -210,6 +210,7 @@ function FloatingBlob({
         width: blob.size,
         height: blob.size,
         transform: "translateX(-50%)",
+        overflow: "visible",
         opacity: 0.5 + blob.depth * 0.5, // 0.5-1.0 based on depth
         filter: `blur(${(1 - blob.depth) * 1.5}px)`, // Slight blur for distant blobs
         zIndex: Math.floor(blob.depth * 10),
@@ -217,6 +218,42 @@ function FloatingBlob({
       }}
       onClick={handleClick}
     >
+      {/* Liquid tail trailing above the blob */}
+      <svg
+        viewBox="0 0 100 100"
+        className="absolute pointer-events-none"
+        style={{
+          width: '50%',
+          height: '80%',
+          left: '50%',
+          bottom: '82%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        <defs>
+          <linearGradient id={`tail-${blob.id}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={`hsl(${25 + blob.hue}, 92%, 62%)`} stopOpacity="0" />
+            <stop offset="50%" stopColor={`hsl(${22 + blob.hue}, 90%, 58%)`} stopOpacity="0.5" />
+            <stop offset="100%" stopColor={`hsl(${20 + blob.hue}, 90%, 55%)`} stopOpacity="0.85" />
+          </linearGradient>
+        </defs>
+        <motion.path
+          fill={`url(#tail-${blob.id})`}
+          animate={{
+            d: [
+              "M50,0 C45,25 35,55 25,100 L75,100 C65,55 55,25 50,0",
+              "M50,0 C42,25 32,55 25,100 L75,100 C68,55 58,25 50,0",
+              "M50,0 C48,25 38,55 25,100 L75,100 C62,55 52,25 50,0",
+              "M50,0 C45,25 35,55 25,100 L75,100 C65,55 55,25 50,0",
+            ],
+          }}
+          transition={{
+            duration: blob.wobbleSpeed * 1.2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </svg>
       <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-lg pointer-events-none">
         <defs>
           <radialGradient id={`grad-${blob.id}`} cx="30%" cy="30%">
