@@ -226,7 +226,7 @@ function FloatingBlob({
           width: '50%',
           height: '80%',
           left: '50%',
-          bottom: '82%',
+          bottom: '68%',
           transform: 'translateX(-50%)',
         }}
       >
