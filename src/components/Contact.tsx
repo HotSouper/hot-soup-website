@@ -96,7 +96,7 @@ export function Contact() {
             {/* Interest dropdown */}
             <div>
               <label htmlFor="interest" className="block text-sm font-medium mb-2">
-                I&apos;m interested in <span className="text-accent">*</span>
+                Interested in <span className="text-accent">*</span>
               </label>
               <select
                 id="interest"

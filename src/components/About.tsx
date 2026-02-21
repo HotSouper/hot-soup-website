@@ -106,7 +106,7 @@ export function About() {
           <div className="space-y-6 text-lg text-muted leading-relaxed">
             <p>
               After 15 years building software across every tech stack imaginable,
-              I&apos;ve seen what works and what doesn&apos;t. The arrival of AI hasn&apos;t
+              we&apos;ve seen what works and what doesn&apos;t. The arrival of AI hasn&apos;t
               changed the fundamentals—it&apos;s amplified them.
             </p>
 
