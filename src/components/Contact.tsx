@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 const interests = [
-  "Product Management",
-  "Coaching",
-  "Rapid Builds",
+  "Rapid Build (MVP)",
+  "Product Coaching",
+  "Embedded Sprints",
   "General Enquiry",
 ];
 

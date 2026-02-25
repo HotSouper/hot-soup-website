@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 
 const services = [
   {
-    title: "Product Management",
+    title: "Rapid Builds",
     description:
-      "AI-enhanced digital transformation across ideation, discovery, and delivery. We shift the focus from code to viability testing—helping you build the right thing, not just build things right.",
+      "Got an idea? We'll ship a working MVP in weeks, not months. AI-native development means lower cost, faster iteration, and production-ready code you can take over.",
     icon: (
       <svg
         className="w-8 h-8"
@@ -18,15 +18,15 @@ const services = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={1.5}
-          d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"
+          d="M13 10V3L4 14h7v7l9-11h-7z"
         />
       </svg>
     ),
   },
   {
-    title: "Coaching",
+    title: "Product Coaching",
     description:
-      "One-to-one or group sessions for product managers, leaders, and executives. Master both the timeless philosophy of product management and the new AI-powered standards transforming our industry.",
+      "Level up your team's product thinking. One-to-one or group sessions for PMs, founders, and leaders — covering both timeless fundamentals and AI-powered workflows.",
     icon: (
       <svg
         className="w-8 h-8"
@@ -44,9 +44,9 @@ const services = [
     ),
   },
   {
-    title: "Rapid Builds",
+    title: "Embedded Sprints",
     description:
-      "Got an idea? Let's make it real. AI-driven development brings your vision to market faster and at lower cost. Production-ready deliverables for early-stage projects that prove your concept.",
+      "Need ongoing support? We embed with your team sprint-by-sprint. Build together, ship together, and we transfer skills as we go — no vendor lock-in.",
     icon: (
       <svg
         className="w-8 h-8"
@@ -58,7 +58,7 @@ const services = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={1.5}
-          d="M13 10V3L4 14h7v7l9-11h-7z"
+          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
         />
       </svg>
     ),
@@ -92,10 +92,10 @@ export function Services() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            What we do
+            How We Work
           </h2>
           <p className="text-xl text-muted max-w-2xl mx-auto">
-            Three ways we help you embrace AI and ship products that matter
+            Build fast, learn fast, take control
           </p>
         </motion.div>
 

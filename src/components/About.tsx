@@ -3,20 +3,19 @@
 import { motion } from "framer-motion";
 
 const problems = [
-  "100-slide decks don't change how teams build.",
-  "Top-down transformation rarely sticks.",
-  "Executive workshops don't trickle down to the people doing the work.",
-  "Mindset change is critical — but not enough on its own.",
-  "Failure is quietly buried, not learned from.",
-  "Real progress can't wait 6 months for a pilot to end.",
+  "Agencies deliver decks, not products — and when they do ship, you can't take over the work.",
+  "Teams don't speak the same language — strategy gets lost between design, engineering, and founders.",
+  "Fixed scope means fixed learning — real products are built iteratively, not from unchanging documents.",
+  "Most teams aren't using AI effectively — they're paying for outdated processes.",
+  "Transformation programmes don't trickle down to the people doing the work.",
 ];
 
 const solutions = [
-  "Mobilising the doers — the people closest to the work.",
-  "Creating a culture of empowered evangelism, where change spreads from within.",
-  "Making transformation feel beneficial from Day 1.",
-  "Coaching in the open — learn by doing, not watching.",
-  "Getting better by experimenting: Cook, serve, taste, adjust.",
+  "Ship working software every sprint, not just plans.",
+  "AI-native tooling from planning through QA.",
+  "Transparent process — you're in the room, not waiting for updates.",
+  "Skill transfer built in: docs, workflows, and coaching as we go.",
+  "No lock-in — commit one sprint at a time.",
 ];
 
 export function About() {
@@ -105,31 +104,29 @@ export function About() {
 
           <div className="space-y-6 text-lg text-muted leading-relaxed">
             <p>
-              After 15 years building software across every tech stack imaginable,
-              I&apos;ve seen what works and what doesn&apos;t. The arrival of AI hasn&apos;t
-              changed the fundamentals—it&apos;s amplified them.
+              After 15 years building software, we&apos;ve seen what works. The teams
+              that win focus on solving real problems — AI just lets us get there
+              faster.
             </p>
 
             <p>
-              The teams that win are still the ones focused on solving real user
-              problems. AI is the enabler, not the goal. It shifts our focus from
-              writing code to testing viability, from building features to
-              validating ideas.
+              We&apos;re not just here to deliver software. We&apos;re here to help you
+              level up. That means lean squads, practical AI integration, and
+              no-nonsense collaboration from day one.
             </p>
 
             <p>
-              Hot Soup exists to help you navigate this shift. Whether you&apos;re a
-              product team ready to level up, an entrepreneur with a vision, or an
-              enterprise looking to innovate—we bring practical AI experience
-              without the hype.
+              Whether you need a rapid MVP, embedded support, or coaching to
+              transform how your team works — we bring practical AI experience
+              without the hype. We bring the spice, but we also bring the spoon.
             </p>
           </div>
 
           <div className="mt-12 grid sm:grid-cols-3 gap-8">
             {[
-              { number: "15+", label: "Years experience" },
-              { number: "AI", label: "Early adopter" },
-              { number: "100%", label: "User-focused" },
+              { number: "15+", label: "Years building software" },
+              { number: "6mo", label: "Typical MVP timeline" },
+              { number: "-75%", label: "vs traditional agency cost" },
             ].map((stat) => (
               <motion.div
                 key={stat.label}

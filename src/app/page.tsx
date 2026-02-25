@@ -1,4 +1,4 @@
-import { Hero, Services, About, Contact, Footer, SoupBackground } from "@/components";
+import { Hero, Services, About, RecentWork, Contact, Footer, SoupBackground } from "@/components";
 
 export default function Home() {
   return (
@@ -13,6 +13,7 @@ export default function Home() {
       <main className="relative z-10 flex-1">
         <Services />
         <About />
+        <RecentWork />
         <Contact />
       </main>
       <Footer />
