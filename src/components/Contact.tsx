@@ -10,6 +10,8 @@ const interests = [
   "General Enquiry",
 ];
 
+type FormStatus = "idle" | "submitting" | "success" | "error";
+
 export function Contact() {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -19,15 +21,50 @@ export function Contact() {
     message: "",
     subscribe: false,
   });
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, construct mailto link with form data
-    const subject = encodeURIComponent(`Hot Soup Enquiry: ${formData.interest || "General"}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nInterested in: ${formData.interest}\n\nMessage:\n${formData.message}`
-    );
-    window.location.href = `mailto:hello@hotsoup.agency?subject=${subject}&body=${body}`;
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const formId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+      if (!formId) {
+        throw new Error("Form not configured");
+      }
+      const response = await fetch(`https://formspree.io/f/${formId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          interest: formData.interest,
+          message: formData.message,
+          subscribe: formData.subscribe,
+        }),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          interest: "",
+          message: "",
+          subscribe: false,
+        });
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch {
+      setStatus("error");
+      setErrorMessage("Something went wrong. Please try again or email us directly.");
+    }
   };
 
   return (
@@ -47,7 +84,37 @@ export function Contact() {
             Get in touch and let&apos;s talk about what you&apos;re building.
           </p>
 
+          {status === "success" ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-surface border border-accent/30 rounded-2xl p-8 text-center"
+            >
+              <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold mb-2">Message sent!</h3>
+              <p className="text-muted mb-6">
+                Thanks for reaching out. We&apos;ll get back to you soon.
+              </p>
+              <button
+                type="button"
+                onClick={() => setStatus("idle")}
+                className="text-accent hover:underline"
+              >
+                Send another message
+              </button>
+            </motion.div>
+          ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
+            {status === "error" && (
+              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 text-red-400">
+                {errorMessage}
+              </div>
+            )}
+
             {/* Name fields */}
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
@@ -146,11 +213,23 @@ export function Contact() {
             {/* Submit button */}
             <button
               type="submit"
-              className="w-full px-8 py-4 bg-accent text-white font-semibold rounded-full hover:bg-accent-dark transition-colors text-lg"
+              disabled={status === "submitting"}
+              className="w-full px-8 py-4 bg-accent text-white font-semibold rounded-full hover:bg-accent-dark transition-colors text-lg disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Submit
+              {status === "submitting" ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Sending...
+                </span>
+              ) : (
+                "Submit"
+              )}
             </button>
           </form>
+          )}
         </motion.div>
       </div>
     </section>

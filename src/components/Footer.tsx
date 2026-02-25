@@ -89,7 +89,7 @@ export function Footer() {
             {/* Social / Contact */}
             <div className="flex items-center gap-4">
               <a
-                href="mailto:hello@hotsoup.agency"
+                href="mailto:hello@hotsoup.io"
                 className="hover:text-white/80 transition-colors"
                 aria-label="Email"
               >
