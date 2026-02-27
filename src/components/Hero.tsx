@@ -30,7 +30,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
         >
           <span className="inline-block px-4 py-2 mb-6 text-sm font-medium text-accent bg-accent/10 rounded-full">
-            AI-Powered Product Development
+            AI-Native Product Studio
           </span>
         </motion.div>
 
@@ -40,8 +40,8 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Ideas into reality,{" "}
-          <span className="text-accent">faster</span>
+          Ship fast.{" "}
+          <span className="text-accent">Level up.</span>
         </motion.h1>
 
         <motion.p
@@ -50,8 +50,8 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          15 years of software development expertise meets cutting-edge AI.
-          We help product teams embrace the future and ship what matters.
+          We help startups ship sharper MVPs using AI-native methods — then
+          transfer the tools and skills so your team can keep building with confidence.
         </motion.p>
 
         <motion.div
@@ -64,13 +64,13 @@ export function Hero() {
             href="#contact"
             className="px-8 py-4 bg-accent text-white font-semibold rounded-full hover:bg-accent-dark transition-colors"
           >
-            Get in touch
+            Get cooking
           </a>
           <a
             href="#services"
             className="px-8 py-4 border border-border font-semibold rounded-full hover:bg-surface transition-colors"
           >
-            Our services
+            How we work
           </a>
         </motion.div>
       </div>
